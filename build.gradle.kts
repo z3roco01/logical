@@ -46,13 +46,15 @@ dependencies {
     loomx.applyMojangMappings()
 
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
-    fapi("fabric-lifecycle-events-v1", "fabric-resource-loader-v0", "fabric-content-registries-v0")
+    val apiVersion: String = sc.properties["deps.fabric_api"]
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${apiVersion}")
+    //fapi("fabric-lifecycle-events-v1", "fabric-resource-loader-v0", "fabric-content-registries-v0", "fabric-registry-sync-v0")
 }
 
 loom {
     fabricModJsonPath = rootProject.file("src/main/resources/fabric.mod.json") // Useful for interface injection
     accessWidenerPath = sc.process(
-        rootProject.file("src/main/resources/template.ct"),
+        rootProject.file("src/main/resources/logical.ct"),
         "build/processed.ct"
     )
 

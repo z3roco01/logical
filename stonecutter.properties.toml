@@ -1,8 +1,8 @@
 # See https://stonecutter.kikugie.dev/wiki/config/properties#centralized-properties
-mod.id = "template"
-mod.name = "Template"
-mod.group = "com.example"
-mod.version = "0.1.0"
+mod.id = "logical"
+mod.name = "Logical"
+mod.group = "z3roco01.logical"
+mod.version = "0.0.1"
 
 deps.fabric_loader = "0.19.2"
 loomx.loom_version = "1.16-SNAPSHOT"
@@ -12,6 +12,12 @@ mod.mc_compat = ">=1.21 <=1.21.1"
 mod.mc_releases = ["1.21", "1.21.1"]
 
 deps.fabric_api = "0.116.10+1.21.1"
+
+["1.20.1"]
+mod.mc_compat = ">=1.20 <=1.20.4"
+mod.mc_releases = ["1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4"]
+
+deps.fabric_api = "0.92.9+1.20.1"
 
 ["1.21.11"]
 mod.mc_compat = "1.21.11"
