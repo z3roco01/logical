@@ -26,7 +26,7 @@ mod.mc_releases = ["1.21.11"]
 deps.fabric_api = "0.141.3+1.21.11"
 
 ["26.1"]
-mod.mc_compat = "~26.1"
-mod.mc_releases = ["26.1", "26.1.1"]
+mod.mc_compat = ">=26.1 <=26.2.3"
+mod.mc_releases = ["26.1", "26.1.1", "26.2"]
 
 deps.fabric_api = "0.145.3+26.1.1"

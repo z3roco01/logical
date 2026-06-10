@@ -3,7 +3,7 @@ package z3roco01.logical;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import z3roco01.logical.block.Blocks;
+import z3roco01.logical.block.LogicalBlocks;
 
 public class Logical implements ModInitializer {
     public static final String MOD_ID = "logical";
@@ -11,7 +11,7 @@ public class Logical implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        Blocks.register();
+        LogicalBlocks.register();
         LOGGER.info("who up logicing it");
     }
 }

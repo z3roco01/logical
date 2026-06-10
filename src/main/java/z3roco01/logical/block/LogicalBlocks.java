@@ -7,19 +7,24 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import z3roco01.logical.util.IdentifierUtil;
 
 import java.util.function.Function;
 
-public class Blocks {
-    public static final LogicGateBlock NAND_GATE = registerWithItem("nand_gate", LogicGateBlock::new, BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.REPEATER));
+public class LogicalBlocks {
+    public static final LogicGateBlock NAND_GATE = createLogicGate("nand_gate", LogicGateBlock.Operation.NAND);
 
     /**
      * Dummy register method to trigger static variable creation
      */
     public static void register() {
 
+    }
+
+    private static LogicGateBlock createLogicGate(String id, LogicGateBlock.Operation operation) {
+        return registerWithItem(id, p -> new LogicGateBlock(operation, p), BlockBehaviour.Properties.ofFullCopy(Blocks.REPEATER));
     }
 
     private static <T extends Block> T register(String id, Function<BlockBehaviour.Properties, T> blockFactory, BlockBehaviour.Properties properties) {
