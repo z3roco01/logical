@@ -33,7 +33,7 @@ public class LogicGateBlock extends RedstoneInOutBlock {
         super(properties, new ArrayList<>(List.of(RelativeDirection.RIGHT, RelativeDirection.LEFT)), new ArrayList<>(List.of(RelativeDirection.FORWARD)));
 
         this.operation = operation;
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(MODE, Mode.DIGITAL).setValue(OUTPUT, 0));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(MODE, Mode.ANALOG).setValue(OUTPUT, 0));
     }
 
     @Override
@@ -44,7 +44,6 @@ public class LogicGateBlock extends RedstoneInOutBlock {
     @Override
     protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         if(direction == state.getValue(FACING).getOpposite()) {
-            Logical.LOGGER.info("os " + state.getValue(OUTPUT));
             return state.getValue(OUTPUT);
         }else {
             return 0;
@@ -62,7 +61,16 @@ public class LogicGateBlock extends RedstoneInOutBlock {
     }
 
     @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        updateOutput(state, level, pos);
+    }
+
+    @Override
     protected void neighborChanged(@NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos, @NonNull Block block, @Nullable Orientation orientation, boolean movedByPiston) {
+        updateOutput(state, level, pos);
+    }
+
+    protected void updateOutput(BlockState state, Level level, BlockPos pos) {
         int[] inputs = getModeInputs(level, state, pos);
 
         if(inputs.length != 2)
@@ -82,6 +90,7 @@ public class LogicGateBlock extends RedstoneInOutBlock {
         };
 
         storeOutput(state, level, pos, output);
+
     }
 
     protected void storeOutput(BlockState state, Level level, BlockPos pos, int value) {
@@ -98,7 +107,6 @@ public class LogicGateBlock extends RedstoneInOutBlock {
         }
 
         level.setBlockAndUpdate(pos, state.setValue(OUTPUT, result));
-        Logical.LOGGER.info("r " + Integer.toBinaryString(result) + " v " + Integer.toBinaryString(value) + " s "+ state.getValue(OUTPUT));
     }
 
     protected int[] getModeInputs(Level level, BlockState state, BlockPos pos) {
@@ -133,7 +141,7 @@ public class LogicGateBlock extends RedstoneInOutBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
-        return super.getStateForPlacement(blockPlaceContext).setValue(MODE, Mode.DIGITAL).setValue(OUTPUT, 0);
+        return super.getStateForPlacement(blockPlaceContext).setValue(MODE, Mode.ANALOG).setValue(OUTPUT, 0);
     }
 
     /**
