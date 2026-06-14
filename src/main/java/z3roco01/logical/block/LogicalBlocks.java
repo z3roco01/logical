@@ -14,7 +14,12 @@ import z3roco01.logical.util.IdentifierUtil;
 import java.util.function.Function;
 
 public class LogicalBlocks {
+    public static final LogicGateBlock AND_GATE = createLogicGate("and_gate", LogicGateBlock.Operation.AND);
+    public static final LogicGateBlock OR_GATE = createLogicGate("or_gate", LogicGateBlock.Operation.OR);
+    public static final LogicGateBlock XOR_GATE = createLogicGate("xor_gate", LogicGateBlock.Operation.XOR);
     public static final LogicGateBlock NAND_GATE = createLogicGate("nand_gate", LogicGateBlock.Operation.NAND);
+    public static final LogicGateBlock NOR_GATE = createLogicGate("nor_gate", LogicGateBlock.Operation.NOR);
+    public static final LogicGateBlock XNOR_GATE = createLogicGate("xnor_gate", LogicGateBlock.Operation.XNOR);
 
     /**
      * Dummy register method to trigger static variable creation
@@ -24,7 +29,7 @@ public class LogicalBlocks {
     }
 
     private static LogicGateBlock createLogicGate(String id, LogicGateBlock.Operation operation) {
-        return registerWithItem(id, p -> new LogicGateBlock(operation, p), BlockBehaviour.Properties.ofFullCopy(Blocks.REPEATER));
+        return registerWithItem(id, p -> new LogicGateBlock(operation, p), BlockBehaviour.Properties.ofFullCopy(Blocks.REPEATER).isRedstoneConductor(Blocks::never));
     }
 
     private static <T extends Block> T register(String id, Function<BlockBehaviour.Properties, T> blockFactory, BlockBehaviour.Properties properties) {

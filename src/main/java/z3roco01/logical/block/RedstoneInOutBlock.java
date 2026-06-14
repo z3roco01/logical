@@ -33,16 +33,18 @@ public abstract class RedstoneInOutBlock extends LogicalHorizDirectionalBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, @Nullable Orientation orientation, boolean movedByPiston) {
-        getInputsUnordered(level, state, pos);
+    protected boolean isSignalSource(BlockState state) {
+        return true;
     }
 
     protected int[] getInputsUnordered(Level level, BlockState state, BlockPos pos) {
         int[] values = new int[inputs.size()];
 
+        int i = 0;
         for(RelativeDirection input : inputs) {
             Direction rotated = translateRelativeDirection(state, input);
-            Logical.LOGGER.info(input.toString() + " : " + getInputSignal(level, pos, rotated));
+            values[i] = getInputSignal(level, pos, rotated);
+            i++;
         }
 
         return values;
